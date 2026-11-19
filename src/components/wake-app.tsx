@@ -273,7 +273,7 @@ export default function WakeApp() {
               <button
                 className={page === id ? 'current' : ''}
                 key={id}
-                onClick={() => go(id as Page)}
+                onClick={() => id === 'schools' ? window.location.assign('/directory') : go(id as Page)}
               >
                 <Icon size={17} />
                 {label}
@@ -688,7 +688,7 @@ export default function WakeApp() {
               )}
               {page === 'search' && <div style={{display:'flex',gap:12,flexWrap:'wrap',margin:'24px 0'}}>
                 <button type="button" className="btn btn-primary" onClick={() => go('boats')}>Каталог катеров <ArrowRight size={16}/></button>
-                <button type="button" className="btn btn-primary" onClick={() => go('schools')}>Каталог школ <ArrowRight size={16}/></button>
+                <button type="button" className="btn btn-primary" onClick={() => window.location.assign('/directory')}>Каталог школ <ArrowRight size={16}/></button>
               </div>}
               {(page === 'boats' || page === 'map') && (
                 <>
@@ -777,11 +777,6 @@ export default function WakeApp() {
               </p>
                 </>
               )}
-              {page === 'schools' && <section style={{padding:'24px 0'}}>
-                <h2>Каталог школ</h2>
-                <p>Все школы Москвы и Московской области собраны в отдельном каталоге.</p>
-                <a href="/directory" className="btn btn-primary">Открыть каталог школ <ArrowRight size={16}/></a>
-              </section>}
 
             </>
           )}
