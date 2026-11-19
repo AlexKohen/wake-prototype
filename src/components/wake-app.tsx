@@ -35,6 +35,7 @@ import VoiceInput from './voice-input';
 import BoatForm from './boat-form';
 import OwnerCalendar from './owner-calendar';
 import { seed, loadStore, STORAGE_KEY } from '@/lib/data';
+import { publicSchools } from '@/lib/public-schools';
 import {
   type Store,
   type Boat,
@@ -737,6 +738,31 @@ export default function WakeApp() {
                   </span>
                 </div>
               )}
+              {page === 'search' && (
+                <section style={{margin:'28px 0 20px'}}>
+                  <h2 style={{fontSize:24,marginBottom:8}}>Реальные вейк-школы Москвы и Подмосковья</h2>
+                  <p style={{color:'#607887',marginBottom:18}}>{publicSchools.length} записей из открытых источников. Неподключённые школы не имеют онлайн-бронирования в WAKE.</p>
+                  <div className="boats-grid">
+                    {publicSchools.filter(school => {
+                      const loc = applied.location.toLocaleLowerCase('ru').trim();
+                      return school.sports.includes(applied.sport) &&
+                        (!loc || /^(москва|moscow)$/.test(loc) ||
+                         (school.name + ' ' + school.address).toLocaleLowerCase('ru').includes(loc));
+                    }).map(school => (
+                      <article className="boat-card" key={school.slug}>
+                        <div className="card-body">
+                          <div className="card-school-line"><h3><a href={`/school/${school.slug}`}>{school.name}</a></h3></div>
+                          <p className="card-location"><MapPin size={14}/>{school.address}</p>
+                          <div className="sport-tags">{school.sports.map(sport=><span key={sport}>{sport}</span>)}</div>
+                          <p style={{fontSize:13,color:'#64748b',margin:'14px 0'}}>Профиль из открытых источников · расписание не подключено</p>
+                          <a href={`/school/${school.slug}`} className="btn btn-primary full">Открыть школу <ArrowUpRight size={16}/></a>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                </section>
+              )}
+              <h2 style={{fontSize:21,margin:'28px 0 12px'}}>Демонстрационные катера</h2>
               {results.length ? (
                 page === 'map' ? (
                   <BoatMap boats={results} search={applied} onSelect={openBoat} />
