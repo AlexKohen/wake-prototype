@@ -35,7 +35,6 @@ import VoiceInput from './voice-input';
 import BoatForm from './boat-form';
 import OwnerCalendar from './owner-calendar';
 import { seed, loadStore, STORAGE_KEY } from '@/lib/data';
-import { publicSchools } from '@/lib/public-schools';
 import {
   type Store,
   type Boat,
@@ -261,7 +260,7 @@ export default function WakeApp() {
         {page === 'landing' ? (
           <nav className="landing-nav">
             <button onClick={() => switchRole('customer')}>Найти катер</button>
-            <a href="/directory">Все школы</a>
+            <a href="/directory">Школы</a>
             <button onClick={() => switchRole('owner')}>Для владельцев</button>
             <button onClick={() => setInfo(true)}>О проекте</button>
           </nav>
@@ -338,7 +337,7 @@ export default function WakeApp() {
             <h3>
               <button onClick={() => openBoat(boat)}>{boat.school}</button>
             </h3>
-            <span className="demo-tag">Демо</span>
+            {boat.fictional && <span className="demo-tag">Демо</span>}
           </div>
           <p className="boat-model">{boat.name}</p>
           <p className="card-location">
@@ -472,8 +471,9 @@ export default function WakeApp() {
               </p>
               <div className="hero-buttons">
                 <Button onClick={() => switchRole('customer')}>
-                  Хочу покататься <ArrowUpRight size={20} />
+                  Найти катер <ArrowUpRight size={20} />
                 </Button>
+                <a href="/directory" className="btn btn-primary">Выбрать школу <ArrowUpRight size={18}/></a>
                 <Button variant="outline" onClick={() => switchRole('owner')}>
                   Я владелец катера / школы
                 </Button>
@@ -575,8 +575,7 @@ export default function WakeApp() {
           <div className="landing-demo">
             <Info size={16} />
             <p>
-              Это интерактивный прототип. Все школы, тарифы и бронирования — демонстрационные.
-              Оплата не требуется.
+              Каталог школ собран из открытых источников. Катера, тарифы и бронирования в поиске пока демонстрационные. Оплата не требуется.
             </p>
             <button onClick={() => setInfo(true)}>
               Подробнее <ArrowUpRight size={15} />
@@ -687,7 +686,7 @@ export default function WakeApp() {
               )}
               <div className="results-toolbar">
                 <div>
-                  <h2>{searched ? 'Твоя волна уже рядом' : 'Катера для твоего следующего сета'}</h2>
+                  <h2>{searched ? 'Подходящие катера' : 'Выбери катер'}</h2>
                   <p>
                     {results.length} {results.length === 1 ? 'катер' : 'катеров'} ·{' '}
                     {applied.location || 'Москва и область'}
@@ -738,31 +737,6 @@ export default function WakeApp() {
                   </span>
                 </div>
               )}
-              {page === 'search' && (
-                <section style={{margin:'28px 0 20px'}}>
-                  <h2 style={{fontSize:24,marginBottom:8}}>Реальные вейк-школы Москвы и Подмосковья</h2>
-                  <p style={{color:'#607887',marginBottom:18}}>{publicSchools.length} записей из открытых источников. Неподключённые школы не имеют онлайн-бронирования в WAKE.</p>
-                  <div className="boats-grid">
-                    {publicSchools.filter(school => {
-                      const loc = applied.location.toLocaleLowerCase('ru').trim();
-                      return school.sports.includes(applied.sport) &&
-                        (!loc || /^(москва|moscow)$/.test(loc) ||
-                         (school.name + ' ' + school.address).toLocaleLowerCase('ru').includes(loc));
-                    }).map(school => (
-                      <article className="boat-card" key={school.slug}>
-                        <div className="card-body">
-                          <div className="card-school-line"><h3><a href={`/school/${school.slug}`}>{school.name}</a></h3></div>
-                          <p className="card-location"><MapPin size={14}/>{school.address}</p>
-                          <div className="sport-tags">{school.sports.map(sport=><span key={sport}>{sport}</span>)}</div>
-                          <p style={{fontSize:13,color:'#64748b',margin:'14px 0'}}>Профиль из открытых источников · расписание не подключено</p>
-                          <a href={`/school/${school.slug}`} className="btn btn-primary full">Открыть школу <ArrowUpRight size={16}/></a>
-                        </div>
-                      </article>
-                    ))}
-                  </div>
-                </section>
-              )}
-              <h2 style={{fontSize:21,margin:'28px 0 12px'}}>Демонстрационные катера</h2>
               {results.length ? (
                 page === 'map' ? (
                   <BoatMap boats={results} search={applied} onSelect={openBoat} />
