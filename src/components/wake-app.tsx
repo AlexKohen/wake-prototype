@@ -62,6 +62,8 @@ const BoatMap = dynamic(() => import('./boat-map'), {
 type Page =
   | 'landing'
   | 'search'
+  | 'boats'
+  | 'schools'
   | 'map'
   | 'favorites'
   | 'bookings'
@@ -201,7 +203,7 @@ export default function WakeApp() {
     e?.preventDefault();
     setApplied({ ...search });
     setSearched(true);
-    go(page === 'map' ? 'map' : 'search');
+    go(page === 'map' ? 'map' : 'boats');
   }
   function interpret(text: string) {
     const parsed = parseSearch(text);
@@ -242,6 +244,8 @@ export default function WakeApp() {
         ]
       : [
           { id: 'search', label: 'Поиск', icon: SearchIcon },
+          { id: 'boats', label: 'Катера', icon: Ship },
+          { id: 'schools', label: 'Школы', icon: Waves },
           { id: 'map', label: 'Карта', icon: Map },
           { id: 'favorites', label: 'Избранное', icon: Heart },
           { id: 'bookings', label: 'Брони', icon: CalendarDays },
@@ -259,8 +263,7 @@ export default function WakeApp() {
         </button>
         {page === 'landing' ? (
           <nav className="landing-nav">
-            <button onClick={() => switchRole('customer')}>Найти катер</button>
-            <a href="/directory">Школы</a>
+            <button onClick={() => switchRole('customer')}>Забронировать сессию</button>
             <button onClick={() => switchRole('owner')}>Для владельцев</button>
             <button onClick={() => setInfo(true)}>О проекте</button>
           </nav>
@@ -429,7 +432,7 @@ export default function WakeApp() {
       </div>
     );
   }
-  const isCustomer = page === 'search' || page === 'map';
+  const isCustomer = page === 'search' || page === 'map' || page === 'boats' || page === 'schools';
   if (!ready)
     return (
       <div className="splash">
@@ -471,9 +474,8 @@ export default function WakeApp() {
               </p>
               <div className="hero-buttons">
                 <Button onClick={() => switchRole('customer')}>
-                  Найти катер <ArrowUpRight size={20} />
+                  Забронировать сессию <ArrowUpRight size={20} />
                 </Button>
-                <a href="/directory" className="btn btn-primary">Выбрать школу <ArrowUpRight size={18}/></a>
                 <Button variant="outline" onClick={() => switchRole('owner')}>
                   Я владелец катера / школы
                 </Button>
@@ -594,7 +596,7 @@ export default function WakeApp() {
                   <h1>
                     Найди свою волну<span className="blue">.</span>
                   </h1>
-                  <p className="muted">Город подождёт. Выбирай катер, время и выходи на воду.</p>
+                  <p className="muted">Выбери место и время или воспользуйся голосовым поиском.</p>
                 </div>
                 <span className="intro-doodle">
                   <Waves size={62} strokeWidth={1.2} />
@@ -684,9 +686,15 @@ export default function WakeApp() {
                   Сбросить дату и время <X size={13} />
                 </button>
               )}
+              {page === 'search' && <div style={{display:'flex',gap:12,flexWrap:'wrap',margin:'24px 0'}}>
+                <button type="button" className="btn btn-primary" onClick={() => go('boats')}>Каталог катеров <ArrowRight size={16}/></button>
+                <button type="button" className="btn btn-primary" onClick={() => go('schools')}>Каталог школ <ArrowRight size={16}/></button>
+              </div>}
+              {(page === 'boats' || page === 'map') && (
+                <>
               <div className="results-toolbar">
                 <div>
-                  <h2>{searched ? 'Подходящие катера' : 'Выбери катер'}</h2>
+                  <h2>{'Каталог катеров'}</h2>
                   <p>
                     {results.length} {results.length === 1 ? 'катер' : 'катеров'} ·{' '}
                     {applied.location || 'Москва и область'}
@@ -767,6 +775,14 @@ export default function WakeApp() {
                 <ShieldCheck size={14} /> Все школы в подборке вымышлены. Фотографии иллюстративные,
                 цены и доступность смоделированы.
               </p>
+                </>
+              )}
+              {page === 'schools' && <section style={{padding:'24px 0'}}>
+                <h2>Каталог школ</h2>
+                <p>Все школы Москвы и Московской области собраны в отдельном каталоге.</p>
+                <a href="/directory" className="btn btn-primary">Открыть каталог школ <ArrowRight size={16}/></a>
+              </section>}
+
             </>
           )}
           {page === 'favorites' && (
