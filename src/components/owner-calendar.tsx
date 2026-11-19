@@ -10,6 +10,7 @@ import {
   Clock3,
 } from 'lucide-react';
 import { Button } from './ui/button';
+import TimeSelect from './time-select';
 import {
   type Store,
   type Block,
@@ -136,9 +137,8 @@ export default function OwnerCalendar({
         <strong>Рабочие часы</strong>
         <label>
           <span className="sr-only">Открытие</span>
-          <input
+          <TimeSelect
             aria-label="Открытие"
-            type="time"
             value={boat.open}
             onChange={(e) => {
               if (e.target.value && e.target.value < boat.close) hours('open', e.target.value);
@@ -149,9 +149,8 @@ export default function OwnerCalendar({
         <span>—</span>
         <label>
           <span className="sr-only">Закрытие</span>
-          <input
+          <TimeSelect
             aria-label="Закрытие"
-            type="time"
             value={boat.close}
             onChange={(e) => {
               if (e.target.value && e.target.value > boat.open) hours('close', e.target.value);
@@ -280,16 +279,15 @@ export default function OwnerCalendar({
             <div className="two-col">
               <label>
                 С
-                <input
+                <TimeSelect
                   required
-                  type="time"
                   value={start}
                   onChange={(e) => setStart(e.target.value)}
                 />
               </label>
               <label>
                 До
-                <input required type="time" value={end} onChange={(e) => setEnd(e.target.value)} />
+                <TimeSelect required value={end} onChange={(e) => setEnd(e.target.value)} />
               </label>
             </div>
           )}
