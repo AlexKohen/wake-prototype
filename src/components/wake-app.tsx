@@ -29,6 +29,7 @@ import {
   Info,
 } from 'lucide-react';
 import { Button } from './ui/button';
+import TimeSelect from './time-select';
 import { Dialog, DialogContent } from './ui/dialog';
 import VoiceInput from './voice-input';
 import BoatForm from './boat-form';
@@ -634,9 +635,8 @@ export default function WakeApp() {
                   <span>
                     <Clock3 size={14} /> Время
                   </span>
-                  <input
+                  <TimeSelect
                     aria-label="Время катания"
-                    type="time"
                     value={search.time}
                     onChange={(e) => setSearch({ ...search, time: e.target.value })}
                   />
@@ -1089,8 +1089,7 @@ export default function WakeApp() {
                 </label>
                 <label>
                   Время
-                  <input
-                    type="time"
+                  <TimeSelect
                     value={interpretation.time ?? search.time}
                     onChange={(e) => setInterpretation({ ...interpretation, time: e.target.value })}
                   />
@@ -1352,9 +1351,8 @@ export default function WakeApp() {
                       </label>
                       <label>
                         Время
-                        <input
+                        <TimeSelect
                           required
-                          type="time"
                           value={bookingSearch.time}
                           onChange={(e) =>
                             setBookingSearch({ ...bookingSearch, time: e.target.value })
