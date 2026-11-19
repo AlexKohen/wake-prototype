@@ -716,8 +716,8 @@ export default function WakeApp() {
                   </label>
                   <div className="segmented">
                     <button
-                      className={page === 'search' ? 'selected' : ''}
-                      onClick={() => go('search')}
+                      className={page === 'boats' ? 'selected' : ''}
+                      onClick={() => go('boats')}
                     >
                       <List size={16} />
                       <span>Список</span>
