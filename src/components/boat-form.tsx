@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { ArrowLeft, Plus, Trash2, Upload, Check, Ship, ChevronRight } from 'lucide-react';
 import { Button } from './ui/button';
+import TimeSelect from './time-select';
 import VoiceInput from './voice-input';
 import { parseBoat } from '@/lib/voice';
 import { type Boat, type Sport, type Tariff, durations, durationLabel } from '@/lib/model';
@@ -383,12 +384,11 @@ export default function BoatForm({
           <div className="two-col">
             <label>
               Открытие
-              <input type="time" required value={open} onChange={(e) => setOpen(e.target.value)} />
+              <TimeSelect required value={open} onChange={(e) => setOpen(e.target.value)} />
             </label>
             <label>
               Закрытие
-              <input
-                type="time"
+              <TimeSelect
                 required
                 value={close}
                 onChange={(e) => setClose(e.target.value)}
