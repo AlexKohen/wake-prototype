@@ -259,6 +259,7 @@ export default function WakeApp() {
         {page === 'landing' ? (
           <nav className="landing-nav">
             <button onClick={() => switchRole('customer')}>Найти катер</button>
+            <a href="/directory">Все школы</a>
             <button onClick={() => switchRole('owner')}>Для владельцев</button>
             <button onClick={() => setInfo(true)}>О проекте</button>
           </nav>
