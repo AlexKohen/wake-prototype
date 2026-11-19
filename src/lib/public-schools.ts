@@ -191,18 +191,6 @@ export const publicSchools: PublicSchool[] = [
     "connection": "unclaimed",
     "verifiedAt": "2026-11-18"
   },
-  {
-    "slug": "fenix",
-    "name": "Fenix",
-    "address": "Москва, Карамышевская набережная, 13, корпус 2",
-    "website": null,
-    "sports": [
-      "Вейксерф"
-    ],
-    "source": "https://msk.spravker.ru/veik-kluby/",
-    "connection": "unclaimed",
-    "verifiedAt": "2026-11-18"
-  },
   {"slug":"wave-motion","name":"Wave Motion","address":"Московская область, Мытищи, Болтино, Парусная улица","website":"https://wave-motion.ru/","sports":["Вейксерф","Вейкборд"],"source":"https://riamo.ru/articles/istorii/top-12-mest-dlja-katanija-na-vejkborde-i-vejkserfe-v-podmoskove/","connection":"unclaimed","verifiedAt":"2026-11-19"},
   {"slug":"wake-time","name":"WakeTime","address":"Московская область, Мытищи, Болтино, Ореховая бухта","website":"https://waketime.ru/","sports":["Вейксерф"],"source":"https://riamo.ru/articles/istorii/top-12-mest-dlja-katanija-na-vejkborde-i-vejkserfe-v-podmoskove/","connection":"unclaimed","verifiedAt":"2026-11-19"},
   {"slug":"marabou","name":"Марабу","address":"Московская область, Мытищи, Болтино, Ореховая улица","website":"https://marabou.ru/","sports":["Вейксерф"],"source":"https://riamo.ru/articles/istorii/top-12-mest-dlja-katanija-na-vejkborde-i-vejkserfe-v-podmoskove/","connection":"unclaimed","verifiedAt":"2026-11-19"},
